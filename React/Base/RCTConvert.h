@@ -9,6 +9,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
+#import <CoreText/CoreText.h>
 
 #import "Layout.h"
 #import "RCTAnimationType.h"
@@ -92,7 +93,8 @@ typedef NSURL RCTFileURL;
 + (UIFont *)UIFont:(UIFont *)font withFamily:(id)json;
 + (UIFont *)UIFont:(UIFont *)font withFamily:(id)family
               size:(id)size weight:(id)weight style:(id)style
-   scaleMultiplier:(CGFloat)scaleMultiplier;
+   scaleMultiplier:(CGFloat)scaleMultiplier
+         monospace:(BOOL)monospace;
 
 + (NSArray<NSArray *> *)NSArrayArray:(id)json;
 + (NSArray<NSString *> *)NSStringArray:(id)json;

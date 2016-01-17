@@ -527,32 +527,34 @@ static BOOL RCTFontIsCondensed(UIFont *font)
                  size:json[@"fontSize"]
                weight:json[@"fontWeight"]
                 style:json[@"fontStyle"]
-          scaleMultiplier:1.0f];
+          scaleMultiplier:1.0f
+          monospace:NO];
 }
 
 + (UIFont *)UIFont:(UIFont *)font withSize:(id)json
 {
-  return [self UIFont:font withFamily:nil size:json weight:nil style:nil scaleMultiplier:1.0];
+  return [self UIFont:font withFamily:nil size:json weight:nil style:nil scaleMultiplier:1.0 monospace:NO];
 }
 
 + (UIFont *)UIFont:(UIFont *)font withWeight:(id)json
 {
-  return [self UIFont:font withFamily:nil size:nil weight:json style:nil scaleMultiplier:1.0];
+  return [self UIFont:font withFamily:nil size:nil weight:json style:nil scaleMultiplier:1.0 monospace:NO];
 }
 
 + (UIFont *)UIFont:(UIFont *)font withStyle:(id)json
 {
-  return [self UIFont:font withFamily:nil size:nil weight:nil style:json scaleMultiplier:1.0];
+  return [self UIFont:font withFamily:nil size:nil weight:nil style:json scaleMultiplier:1.0 monospace:NO];
 }
 
 + (UIFont *)UIFont:(UIFont *)font withFamily:(id)json
 {
-  return [self UIFont:font withFamily:json size:nil weight:nil style:nil scaleMultiplier:1.0];
+  return [self UIFont:font withFamily:json size:nil weight:nil style:nil scaleMultiplier:1.0 monospace:NO];
 }
 
 + (UIFont *)UIFont:(UIFont *)font withFamily:(id)family
               size:(id)size weight:(id)weight style:(id)style
    scaleMultiplier:(CGFloat)scaleMultiplier
+         monospace:(BOOL)monospace
 {
   // Defaults
   NSString *const RCTDefaultFontFamily = @"System";
@@ -599,6 +601,17 @@ static BOOL RCTFontIsCondensed(UIFont *font)
           symbolicTraits |= UIFontDescriptorTraitCondensed;
         }
         fontDescriptor = [fontDescriptor fontDescriptorWithSymbolicTraits:symbolicTraits];
+        font = [UIFont fontWithDescriptor:fontDescriptor size:fontSize];
+      }
+      if (monospace) {
+        UIFontDescriptor *fontDescriptor = [font fontDescriptor];
+        NSArray *featureSettings = @[
+          @{
+            UIFontFeatureTypeIdentifierKey: @(kNumberSpacingType),
+            UIFontFeatureSelectorIdentifierKey: @(kMonospacedNumbersSelector)
+          }
+        ];
+        fontDescriptor = [fontDescriptor fontDescriptorByAddingAttributes:@{UIFontDescriptorFeatureSettingsAttribute: featureSettings}];
         font = [UIFont fontWithDescriptor:fontDescriptor size:fontSize];
       }
       return font;

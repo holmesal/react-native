@@ -238,7 +238,8 @@ static css_dim_t RCTMeasure(void *context, float width, float height)
 
   UIFont *font = [RCTConvert UIFont:nil withFamily:fontFamily
                                size:fontSize weight:fontWeight style:fontStyle
-                    scaleMultiplier:(_allowFontScaling && _fontSizeMultiplier > 0.0 ? _fontSizeMultiplier : 1.0)];
+                    scaleMultiplier:(_allowFontScaling && _fontSizeMultiplier > 0.0 ? _fontSizeMultiplier : 1.0)
+                          monospace:_monospace];
   [self _addAttribute:NSFontAttributeName withValue:font toAttributedString:attributedString];
   [self _addAttribute:NSKernAttributeName withValue:letterSpacing toAttributedString:attributedString];
   [self _addAttribute:RCTReactTagAttributeName withValue:self.reactTag toAttributedString:attributedString];

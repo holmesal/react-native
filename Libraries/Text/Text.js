@@ -31,6 +31,7 @@ const viewConfig = {
     isHighlighted: true,
     numberOfLines: true,
     allowFontScaling: true,
+    monospace: false
   }),
   uiViewClassName: 'RCTText',
 };
@@ -101,11 +102,18 @@ const Text = React.createClass({
      * Specifies should fonts scale to respect Text Size accessibility setting on iOS.
      */
     allowFontScaling: React.PropTypes.bool,
+    /**
+     * When true, uses a monospaced (instead of proportionally-spaced) font.
+     * Only used if the `fontFamily` style property is set to "System".
+     * @platform ios
+     */
+    monospace: React.PropTypes.bool,
   },
   getDefaultProps(): Object {
     return {
       accessible: true,
       allowFontScaling: true,
+      monospace: false
     };
   },
   getInitialState: function(): Object {
